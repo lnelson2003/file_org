@@ -13,7 +13,32 @@ title: "Cleaning SFO weather data"
     - Create a variable called `month_name` that shows the 3-letter abbreviation for each case.
 - Save your wrangled data to the `data/clean/` folder using `write_csv()`. Name this file `weather_clean.csv`. Look up the documentation for this function by entering `?write_csv` in the Console. You'll need to write an appropriate relative path.
 
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(dplyr)
 
+weather <- read.csv("../../data/raw/weather.csv")
+```
+
+```{r}
+weather_clean <- weather%>% 
+  mutate(PrecipYr = na_if(PrecipYr, 99999))
+```
+
+```{r}
+weather_date <- weather_clean %>% 
+  arrange(Month, Day) %>% 
+  mutate(dateInYear = 1:365)
+```
+
+```{r}
+weather_abbreviation <- weather_clean %>%
+    mutate(month_name = Month)
+
+
+```
 
 Notes that may help for the data wrangling:
 
